@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        System.out.println(calc (input));
+        scanner.close();
+    }
+
+    private static String calc (String input) {
+        String[] parts = input.split("\\s+");
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Формат математической операции не удовлетворяет заданию - два операнда и один оператор");
+        }
+
+        int x;
+        int y;
+        try {
+            x = Integer.parseInt(parts[0]);
+            y = Integer.parseInt(parts[2]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Строка не является   математической операцией");
+        }
+
+        if (x < 1 || x > 10 || y < 1 || y > 10) {
+            throw new IllegalArgumentException("Операнды должны быть в диапазоне от 1 до 10");
+        }
+
+        char operation = parts[1].charAt(0);
+        switch (operation) {
+            case '+':
+                return Integer.toString(x + y) ;
+            case '-':
+                return Integer.toString(x - y);
+            case '*':
+                return Integer.toString(x * y);
+            case '/':
+                return Integer.toString(Math.floorDiv(x, y));
+            default:
+                throw new IllegalArgumentException("Неправильный оператор");
+        }
+    }
+}
